@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-prometheus-demo
+  labels:
+    app: go-prometheus-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: go-prometheus-demo
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9090"
+      labels:
+        app: go-prometheus-demo
+    spec:
+      containers:
+      - name: go-prometheus-demo
+        image: eu.gcr.io/pmoncada-001/go-prometheus-demo:latest
+        ports:
+        - containerPort: 80
